@@ -2,8 +2,9 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Entity\Aliment;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
@@ -13,7 +14,7 @@ class AppFixtures extends Fixture
         $a1->setNom('Carotte')
             ->setPrix(1.80)
             ->setCalorie(36)
-            ->setImage("legumes/carrote.jpg")
+            ->setImage("legumes/carote.jpg")
             ->setProteine(0.77)
             ->setGlucide(6.45)
             ->setLipide(0.26);
