@@ -19,10 +19,10 @@ class AlimentRepository extends ServiceEntityRepository
         parent::__construct($registry, Aliment::class);
     }
 
-    public function getAlimentsLessCalories($calorie){
+    public function getAlimentsByProperties($properties, $operator, $value){
       return $this->createQueryBuilder('a')
-      ->andWhere('a.calorie < :val')
-      ->setParameter('val',$calorie)
+      ->andWhere('a.'.$properties.' '.$operator.' :val')
+      ->setParameter('val',$value)
       ->getQuery()
       ->getResult();
     }
