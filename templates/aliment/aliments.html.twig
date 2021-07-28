@@ -1,8 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Liste des aliments{% endblock %}
-{% block monTitre %}Liste de tous les aliments{% endblock %}
+{% block monTitre %}Liste de tous les aliments
+ {% if isCalorie %}
+  avec moins de 50 Calories
+ {% endif %}
+{% endblock %}
 {% block body %}
+<a href="{{path('aliments_by_calories', {'calorie':50})}}">Aliments avec moins de 50 calories au 100g</a>
 <div class="row">
   {% for aliment in aliments %}
     <div class="col-12 col-md-6 col-lg-4 col-xl-3">
