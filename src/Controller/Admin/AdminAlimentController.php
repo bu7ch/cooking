@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Aliment;
 use App\Form\AlimentType;
 use App\Repository\AlimentRepository;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,10 +21,9 @@ class AdminAlimentController extends AbstractController
             'aliments' => $aliments,
         ]);
     }
-
     
     #[Route('/admin/aliment/new', name: 'admin_aliments_new')]
-    #[Route('/admin/aliment/{id}', name: 'admin_aliments_edit')]
+    #[Route('/admin/aliment/{id}', name: 'admin_aliments_edit', methods:['GET','POST'])]
     public function addAndEdit(Aliment $aliment = null, Request $request): Response
     {
       $manager = $this->getDoctrine()->getManager();
@@ -37,10 +37,23 @@ class AdminAlimentController extends AbstractController
         $manager->flush();
         return $this->redirectToRoute('admin_aliments');
       }
-        return $this->render('admin/admin_aliment/editAliment.html.twig', [
+        return $this->render('admin/admin_aliment/newAndEditAliment.html.twig', [
             'aliment' => $aliment,
             'form' => $form->createView(),
             'edition'=> $aliment->getId() !== null
         ]);
     }
+
+    #[Route('/admin/aliment/{id}', name: 'admin_aliments_delete', methods:['DELETE'])]
+    public function suppression(Aliment $aliment, Request $request): Response
+    {
+      $manager = $this->getDoctrine()->getManager();
+      if($this->isCsrfTokenValid('SUP' . $aliment->getId(), $request->get('_token'))){
+        $manager->remove($aliment);
+        $manager->flush();
+        return $this->redirectToRoute('admin_aliments');
+      }
+      
+    }
+
 }
