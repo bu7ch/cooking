@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition d'un aliment{% endblock %}
+{% block monTitre %}
+  Page d'edition {{aliment.nom}}
+{% endblock %}
+{% block body %}
+{{form_start(form)}}
+  {{form_widget(form)}}
+  <input type="submit" class="btn btn-primary" value="mettre à jour">
+{{form_end(form)}}
+{% endblock %}
