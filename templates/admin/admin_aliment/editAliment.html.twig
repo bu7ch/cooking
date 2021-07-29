@@ -2,11 +2,26 @@
 
 {% block title %}Edition d'un aliment{% endblock %}
 {% block monTitre %}
+{% if edition %}
   Page d'edition {{aliment.nom}}
+  {% else %}
+  Ajout d'un aliment
+  {% endif %}
 {% endblock %}
 {% block body %}
 {{form_start(form)}}
-  {{form_widget(form)}}
+<div class="row">
+  <div class="col-6">
+    {% if aliment.image %}
+    <img src="{{asset("images/#{aliment.image}")}}" style="width:%25" alt="">
+    {% endif %}
+    <div>{{form_row(form.image)}}</div>
+    <div>{{form_row(form.nom, {"attr" : {'class': 'bg-success'}, label: "Nom de l'aliment"})}}</div>
+  </div>
+  <div class="col-6">
+    {{form_widget(form)}}
+  </div>
+</div>
   <input type="submit" class="btn btn-primary" value="mettre à jour">
 {{form_end(form)}}
 {% endblock %}
